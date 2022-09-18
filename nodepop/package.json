@@ -1,0 +1,25 @@
+{
+  "name": "nodepop",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www arrancado servidor HTTP en http://localhost:3001",
+    "start-dev": "./node_modules/nodemon/bin/nodemon.js ./bin/www",
+    "init-db": "node initDB.js"
+  },
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.8",
+    "express": "~4.16.1",
+    "express-validator": "^6.14.2",
+    "http-errors": "~1.6.3",
+    "mogoose": "^0.0.1-security",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "mongoose": "^6.6.1",
+    "nodemon": "^2.0.19"
+  }
+}
