@@ -10,9 +10,13 @@
  - initial clear and chargue data in bbdd => in nodepop => run in terminal: *npm run init-db*
  - run app => in nodepop => run in terminal: *npm run start-dev*
  - port => 3001
+
  
 **API INFO**
-
+ 
+ - basic-auth => admin / 12345
+  
+  
   *EndPoints*
  - GET => http://localhost:3001/api/anouncements/
  - POST => http://localhost:3001/api/anouncements/post/
