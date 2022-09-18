@@ -47,7 +47,7 @@ async function initAnouncements() {
     {
       name: "ordenador",
       sale: false,
-      price: 15500,
+      price: 1500,
       picture: "ordenador.png",
       tags: ["technology"],
     },
@@ -55,14 +55,14 @@ async function initAnouncements() {
       name: "moto",
       sale: false,
       price: 300,
-      picture: "ordenador.png",
+      picture: "moto.png",
       tags: ["motor"],
     },
     {
-      name: "moto",
+      name: "moto2",
       sale: true,
       price: 300,
-      picture: "ordenador.png",
+      picture: "moto2.png",
       tags: ["motor"],
     },
     {
