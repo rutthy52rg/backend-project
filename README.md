@@ -20,7 +20,7 @@
  - DELETE => http://localhost:3001/api/anouncements/delete/_id
 
  *Queries strings example*
- *http://localhost:3001/?tags=motor&sale=false&name=moto&price=desde+que+10%E2%82%AC&sort=price&skip=0&limit=2*
+ *http://localhost:3001/?tags=motor&sale=false&name=moto&price=50&sort=price&skip=0&limit=2*
 
 *Estructura proyecto
 
