@@ -10,6 +10,14 @@ const anouncementSchema = mongoose.Schema({
 });
 
 //para methods estatico del modelo
+anouncementSchema.statics.showAll = function () {
+  const query = Anouncement.find();  
+
+  //devuelve promesa
+  return query.exec();
+};
+
+//para methods estatico del modelo
 anouncementSchema.statics.lista = function (filtro, skip, limit,fields, sort) {
   const query = Anouncement.find(filtro);  
   query.skip(skip);

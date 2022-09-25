@@ -50,7 +50,7 @@ router.get("/", async function (req, res, next) {
         filtro.price = 50;
       }
     }
-
+    const allAnouncements = await Anouncement.showAll();
     const anouncements = await Anouncement.lista(
       filtro,
       skip,
@@ -59,7 +59,7 @@ router.get("/", async function (req, res, next) {
       sort
     );
 
-    anouncements.forEach((ele, index) => {
+    allAnouncements.forEach((ele, index) => {
       tagsArray.push(...ele.tags);
     });
 
