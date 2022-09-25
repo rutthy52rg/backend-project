@@ -6,6 +6,7 @@ const Anouncement = require("../models/Anouncement");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try {
+  
     const page = 1;
     const tagsArray = [];
     const url = req.url;
@@ -40,9 +41,9 @@ router.get("/", async function (req, res, next) {
       filtro.tags = { $all: [tags] };
     }
     if (price) {
-      if(price === "10€-50€" ){
+      if (price === "10€-50€") {
         filtro.price = { $gte: 0, $lte: 50 };
-      } else if (price === "desde que 10€" ){
+      } else if (price === "desde que 10€") {
         filtro.price = { $gte: 10 };
       } else if (price === "hasta 50€") {
         filtro.price = { $lte: 50 };
@@ -66,7 +67,7 @@ router.get("/", async function (req, res, next) {
     const tagsArryNoRepeat = tagsArray.filter((item, pos) => {
       return tagsArray.indexOf(item) == pos;
     });
-
+  
     res.locals.name = name;
     res.locals.tags = tags;
     res.locals.sale = sale;
@@ -79,7 +80,8 @@ router.get("/", async function (req, res, next) {
     res.locals.limit = limit;
     res.locals.currentSkip = currentSkip;
     res.locals.pictUrl = "../public/images/";
-
+    
+  
     res.render("index", {
       title: "NodePOP Aplication",
       anouncements: anouncements,
