@@ -1,4 +1,5 @@
 var express = require("express");
+const { __ } = require("i18n");
 var router = express.Router();
 
 const Anouncement = require("../models/Anouncement");
@@ -6,7 +7,6 @@ const Anouncement = require("../models/Anouncement");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try {
-  
     const page = 1;
     const tagsArray = [];
     const url = req.url;
@@ -67,7 +67,9 @@ router.get("/", async function (req, res, next) {
     const tagsArryNoRepeat = tagsArray.filter((item, pos) => {
       return tagsArray.indexOf(item) == pos;
     });
-  
+
+    res.locals.wellcome = res.__("Wellcome");
+    res.locals.title = res.__("NodePOP Aplication");
     res.locals.name = name;
     res.locals.tags = tags;
     res.locals.sale = sale;
@@ -80,10 +82,8 @@ router.get("/", async function (req, res, next) {
     res.locals.limit = limit;
     res.locals.currentSkip = currentSkip;
     res.locals.pictUrl = "../public/images/";
-    
-  
+
     res.render("index", {
-      title: "NodePOP Aplication",
       anouncements: anouncements,
     });
   } catch (err) {

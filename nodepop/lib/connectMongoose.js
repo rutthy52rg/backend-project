@@ -11,8 +11,7 @@ mongooseConnect.connection.once("open", () => {
   console.log("conectado a mongoDB en", mongooseConnect.connection.name);
 });
 
-mongooseConnect.connect("mongodb://localhost/anouncements");
+mongooseConnect.connect(process.env.MONGODB_CONNECTION_STRING); //variable entorno desde el fichero .env
 
 //lo exportamos para poder cargarlo en cualquier zona del proyecto
 module.exports = mongooseConnect.connection;
-

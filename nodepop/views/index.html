@@ -1,0 +1,146 @@
+<%- include ('header.html') -%>
+<%- include ('claim.html') -%>
+<body>
+    <div class="container">
+      <div class="row justify-content-start">
+        <div class="col-sm-12 text-center mb-4">
+          <h1></h1>
+        </div>
+        <div class="col-sm-12 text-center mb-4">
+        </div>
+        <div class="m-4">
+          <form
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              align-content: center;
+              background-color: #f5f5f5;
+              padding: 5px;
+            "
+          >
+            <div class="form-group" style="width: 33%; margin: 5px">
+              <label for="tags">Tags</label>
+              <select name="tags" class="custom-select">
+                <option value="">All</option>
+                <% tagsArray.forEach(ele => { %>
+                <option value="<%= ele %>"><%= ele %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group" style="width: 25%; margin: 5px">
+              <label for="type">Type</label>
+              <select name="sale" class="custom-select">
+                <option value="">All</option>
+                <option value="true">Sale</option>
+                <option value="false">Buy</option>
+              </select>
+            </div>
+            <div class="form-group" style="width: 33%; margin: 5px">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="name"
+              />
+            </div>
+            <div class="form-group" style="width: 33%; margin: 5px">
+              <label for="price"><%= __('Price') %></label>
+              <select name="price" class="custom-select">
+                <option value="">All</option>
+                <option value="10€-50€">10€-50€</option>
+                <option value="desde que 10€">desde que 10€</option>
+                <option value="hasta 50€">hasta 50€</option>
+                <option value="igual 50€">igual 50€</option>
+              </select>
+            </div>
+            <div class="form-group" style="width: 20%; margin: 5px">
+              <label for="order">Order</label>
+              <select name="sort" class="custom-select">
+                <option value="">Not order</option>
+                <option value="name">name</option>
+                <option value="price">price</option>
+              </select>
+            </div>
+            <div
+              class="form-group"
+              style="
+                width: 38%;
+                margin: 5px;
+                text-align: right;
+                display: flex;
+                align-items: end;
+                justify-content: flex-end;
+              "
+            >
+              <a href="/" class="btn btn-secondary mr-2">
+                Clear filter</a
+              >
+              <input type="submit" class="btn btn-secondary" value="Filter" />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row" style="justify-content: flex-start">
+        <div
+          style="width: 100%; display: flex; justify-content: flex-end"
+          class="mt-4"
+        >
+          <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">1</span>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+            </ul>
+          </nav>
+        </div>
+          <% if (anouncements.length > 0) { %>
+           <% anouncements.forEach(anouncement => { %>
+        <div class="" style="width: 23rem; overflow: hidden; flex-wrap: wrap">
+          <div class="card" style="height: 450px; margin: 10px">
+            <div
+              style="
+                width: 100%;
+                overflow: hidden;
+                height: 250px;
+                max-height: 250px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1px solid #f5f5f5;
+              "
+            >
+              <img
+                src="<%=pictUrl%><%= anouncement.picture %>"
+                class="card-img-top"
+                alt="..."
+                style="width: 100%"
+              />
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><%= anouncement.name %></h5>
+              <p class="card-text"><%= anouncement.price %> €</p>
+              <p class="card-text" style="height: 50px">
+                <%= anouncement.tags[1] %>
+              </p>
+              <a
+                href="#"
+                class="btn <% if (anouncement.sale) { %> btn-warning <% } else { %> btn-success <% } %>"
+                style="float: right"
+              >
+                <% if (anouncement.sale) { %> SALE <% } else { %> BUY <% } %>
+              </a>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <p>NOT EXISTS PRODUCTS</p>
+        <% } %>
+      </div>
+                 
+    </div>
+
+<%- include ('footer.html') -%>

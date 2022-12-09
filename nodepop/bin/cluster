@@ -1,0 +1,108 @@
+#!/usr/bin/env node
+
+require("dotenv").config(); //carga librería y con config lee el fichero env
+/**
+ * Module dependencies.
+ */
+
+var app = require("../app");
+var debug = require("debug")("nodepop:server");
+var http = require("http");
+const cluster = require("cluster");
+const os = require("os");
+
+if (cluster.isMaster) {
+  console.log("arrancando master");
+  //creamos n clones  de  si mismo
+  const numCores = os.cpus().length;
+  for (let i = 0; i < numCores; i++) {
+    cluster.fork(); //crea un clon de este proceso en otro hilo
+  }
+  //aviso de cuanto arranca el cluster
+  cluster.on("listening", (worker, address) => {
+    console.log(`worker ${worker.id} arrancado con pid ${worker.process.pid}`);
+    //aviso de cuando muera un cluster
+    cluster.on("exit", (worker, code, signal) => {
+      console.log(
+        `worker ${worker.id} arrancado con pid ${worker.process.pid} ha terminado con code ${code} y signal ${signal}`
+      );
+      //arrancamos otro cluster para sustituir el que se ha muerto
+      cluster.fork();
+    });
+  });
+} else {
+  /**
+   * Get port from environment and store in Express.
+   */
+
+  var port = normalizePort(process.env.PORT || "3002");
+  app.set("port", port);
+
+  /**
+   * Create HTTP server.
+   */
+
+  var server = http.createServer(app);
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+}
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+  console.log("arrancado servidor HTTP en http://localhost:3002");
+}

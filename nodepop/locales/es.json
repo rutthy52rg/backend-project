@@ -1,0 +1,15 @@
+{
+	"Filter": "Filtro",
+	"Price": "Precio",
+	"i18n plural": "i18n plural",
+	"mouse": {
+		"one": "mouse",
+		"other": "mice"
+	},
+	"Wellcome": "Wellcome",
+	"NodePOP Aplication": "NodePOP Aplicacion",
+	"Private": "Privado",
+	"Invalid credentials": "Credenciales erróneas.",
+	"Hello": "Hola",
+	"Logout": "Logout"
+}

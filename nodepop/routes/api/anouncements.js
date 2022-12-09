@@ -7,7 +7,8 @@ const Anouncement = require("../../models/Anouncement");
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   try {
-
+    const userId = req.apiUserId;
+    console.log("userid:", userId);
     // filtros
     const name = req.query.name;
     const sale = req.query.sale;

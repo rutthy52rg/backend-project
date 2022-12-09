@@ -1,27 +1,33 @@
-'use strict';
+"use strict";
 
-const readline = require('readline');
+require("dotenv").config(); //carga librería y con config lee el fichero env
+
+const readline = require("readline");
 
 // conectar a la base de datos
-const connection = require('./lib/connectMongoose');
+const connection = require("./lib/connectMongoose");
 
 // cargar los modelos
-const Anouncement = require('./models/Anouncement');
+//const Anouncement = require("./models/Anouncement");
+const { Anouncement, User } = require("./models");
 
 async function main() {
-  const continuar = await pregunta('Estas seguro, seguro, seguro, de que quieres borrar toda la base de datos y cargara datos iniciales? ');
+  const continuar = await pregunta(
+    "Estas seguro, seguro, seguro, de que quieres borrar toda la base de datos y cargara datos iniciales? y/n \n"
+  );
   if (!continuar) {
     process.exit();
   }
 
   // inicializar la colección de agentes
   await initAnouncements();
+  // inicializar la colección de agentes
+  await initUsers();
 
   connection.close();
-
 }
 
-main().catch(err => console.log('Hubo un error:', err));
+main().catch((err) => console.log("Hubo un error:", err));
 
 async function initAnouncements() {
   // borrar todos los documentos de anuncios
@@ -105,29 +111,52 @@ async function initAnouncements() {
       sale: true,
       price: 50,
       picture: "patines.png",
-      tags: ["lifestyle",],
+      tags: ["lifestyle"],
     },
   ]);
   console.log(`Creados ${inserted.length} anuncios.`);
 }
 
+async function initUsers() {
+  // borrar todos los documentos de anuncios
+  const deleted = await User.deleteMany();
+  console.log(`Eliminados ${deleted.deletedCount} users.`);
+
+  // crear agentes iniciales
+  const inserted = await User.insertMany([
+    {
+      email: "user@example.com",
+      password: await User.hashPassword("1234"),
+    },
+    {
+      email: "romeo@romeo.com",
+      password: await User.hashPassword("mandocandado"),
+    },
+    {
+      email: "julieta@julieta.com",
+      password: await User.hashPassword("usocandado"),
+    },
+    {
+      email: "man@inthemiddle.com",
+      password: await User.hashPassword("quevoy"),
+    },
+  ]);
+  console.log(`Creados ${inserted.length} users.`);
+}
 function pregunta(texto) {
   return new Promise((resolve, reject) => {
-
     const ifc = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
 
-    ifc.question(texto, respuesta => {
+    ifc.question(texto, (respuesta) => {
       ifc.close();
-      if (respuesta.toLowerCase() === 'y'){
+      if (respuesta.toLowerCase() === "y") {
         resolve(true);
         return;
       }
       resolve(false);
-    })
-
+    });
   });
-
 }
